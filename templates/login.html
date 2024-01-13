@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Login - App{% endblock %}
+
+{% block body %}
+
+
+{% block stylesheets %}
+    <!-- Additional stylesheets for the home page -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+{% endblock %}
+
+
+<body>
+    <div class="login-container">
+        <h2>Login</h2>
+        <form action="{{ url_for('login') }}" method="post">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit">Login</button>
+        </form>
+    </div>
+</body>
+{% endblock %}

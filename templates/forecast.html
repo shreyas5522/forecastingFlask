@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+{% block stylesheets %}
+    <!-- Additional stylesheets for the home page -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+{% endblock %}
+
+
+<body>
+
+  <div class="forecast-form">
+    <h2>Get Traffic Forecast</h2>
+    <form id="forecastForm">
+      <input type="text" id="websiteUrl" placeholder="Enter website URL">
+      <button type="submit" onclick="forecastTraffic()">Forecast Traffic</button>
+    </form>
+  </div>
+  <div class="forecast-result" id="forecastResult" style="display: none;">
+    <h2>Forecast Result</h2>
+    <p id="trafficForecast"></p>
+  </div>
+  <div class="platform-info">
+    <h2>About the Platform</h2>
+    <p>This platform provides accurate traffic forecasting for websites based on historical data and predictive algorithms. Enter your website URL to get a traffic forecast for your platform.</p>
+  </div>
+
+
+  <script>
+    function forecastTraffic() {
+      var websiteUrl = document.getElementById('websiteUrl').value;
+      // Perform traffic forecasting logic here
+      // Display the forecast result
+      var forecastResult = document.getElementById('forecastResult');
+      var trafficForecast = document.getElementById('trafficForecast');
+      trafficForecast.innerHTML = "Forecasted traffic for " + websiteUrl + " is 1000 visitors per day.";
+      forecastResult.style.display = "block";
+    }
+  </script>
+</body>
+
+{% endblock %}
