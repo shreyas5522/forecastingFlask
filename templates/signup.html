@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Login - App{% endblock %}
+{% block title %}SignUp - App{% endblock %}
 
 {% block body %}
 
@@ -13,27 +13,29 @@
 
 
 <body>
-    <h2>Login</h2>
+    <h2>Sign Up</h2>
     <div class="login-container">
 
     {% with messages = get_flashed_messages() %}
     {% if messages %}
-    <ul style="display:block;">
+    <ul>
         {% for message in messages %}
         <li>{{ message }}</li>
         {% endfor %}
     </ul>
     {% endif %}
     {% endwith %}
-    <form style="display:block;" method="post" action="">
+    <form method="post" action="">
         {{ form.hidden_tag() }}
         <label for="username">Username:</label>
         {{ form.username() }}
         <label for="password">Password:</label>
         {{ form.password() }}
+        <label for="confirm_password">Confirm Password:</label>
+        {{ form.confirm_password() }}
         {{ form.submit() }}
     </form>
-    <p>Don't have an account? <a href="{{ url_for('signup') }}">Sign up here</a>.</p>
-</div>
+    <p>Already have an account? <a href="{{ url_for('login') }}">Log in here</a>.</p>
+    </div>
 </body>
 {% endblock %}
