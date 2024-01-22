@@ -27,6 +27,8 @@ sudo apt-get install libmysqlclient-dev
 sudo apt-get install -y python3-mysqldb
 sudo apt install mysql-server
 sudo apt-get install python3-venv
+sudo apt install python3-dev nginx -y
+
 ```
 ### 2. Setup of MySQL
 
@@ -100,6 +102,8 @@ pip install Flask-WTF
 pip install WTForms
 pip install Flask-Login
 pip install mysqlclient
+pip install flask gunicorn
+
 ```
 
 > **Note:**
