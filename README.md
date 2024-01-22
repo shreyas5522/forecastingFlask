@@ -23,7 +23,7 @@ cd forecastingFlask
 ```bash
 sudo apt-get install python-is-python3
 sudo apt-get install python3-pip
-sudo apt-get install libmysqlclient-dev
+sudo apt-get install pkg-config libmysqlclient-dev
 sudo apt-get install -y python3-mysqldb
 sudo apt install mysql-server
 sudo apt-get install python3-venv
