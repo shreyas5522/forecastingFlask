@@ -99,6 +99,7 @@ pip install Flask-SQLAlchemy
 pip install Flask-WTF
 pip install WTForms
 pip install Flask-Login
+pip install mysqlclient
 ```
 
 > **Note:**
