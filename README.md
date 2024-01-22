@@ -13,6 +13,10 @@ Before you begin, make sure you have the following installed:
 
 ## Installation
 
+```bash
+git clone https://github.com/shreyas5522/forecastingFlask.git
+cd forecastingFlask
+```
 
 ### 1. Installation of Required Packages
 
@@ -35,7 +39,7 @@ sudo mysql -u root -p
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'new_password';
 ```
 ```bash
-ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'new_password';
+FLUSH PRIVILEGES;
 ```
 
 ### 3. Installation of Python Packages
@@ -49,4 +53,10 @@ pip install WTForms
 pip install Flask-Login
 ```
 
+> **Note:**
+> Also change the password in app.py Like -> app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:YOUR_PASSWORD@localhost/login'
 
+### 4. Run the Python Package
+```bash
+python app.py
+```
