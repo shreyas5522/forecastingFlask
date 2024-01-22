@@ -41,8 +41,55 @@ ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'new_pass
 ```bash
 FLUSH PRIVILEGES;
 ```
+##### Login to MySQL With Updated Commands
+1. Create a MySQL database:
+
+    ```bash
+    mysql -u your_username -p
+    ```
+
+2. Create the database:
+
+    ```sql
+    CREATE DATABASE IF NOT EXISTS login;
+    USE login;
+    ```
+
+3. Create the users table:
+
+    ```sql
+    CREATE TABLE IF NOT EXISTS users (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        username VARCHAR(20) UNIQUE NOT NULL,
+        password VARCHAR(60) NOT NULL
+    );
+    ```
+
+4. Exit the MySQL shell:
+
+    ```sql
+    exit
+    ```
 
 ### 3. Installation of Python Packages
+> **Note:**
+> If want Virtual Environment for Python.
+
+1. Create a virtual environment (optional but recommended):
+
+    ```bash
+    python -m venv venv
+    ```
+
+2. Activate the virtual environment:
+
+    - On macOS/Linux:
+
+        ```bash
+        source venv/bin/activate
+        ```
+
+#### Install the required dependencies:
 
 ```bash
 
