@@ -28,7 +28,7 @@ sudo apt-get install -y python3-mysqldb
 sudo apt install mysql-server
 sudo apt-get install python3-venv
 sudo apt install python3-dev nginx -y
-
+sudo apt install gunicorn
 ```
 ### 2. Setup of MySQL
 
