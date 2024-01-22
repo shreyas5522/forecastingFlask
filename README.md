@@ -26,6 +26,7 @@ sudo apt-get install python3-pip
 sudo apt-get install libmysqlclient-dev
 sudo apt-get install -y python3-mysqldb
 sudo apt install mysql-server
+sudo apt-get install python3-venv
 ```
 ### 2. Setup of MySQL
 
