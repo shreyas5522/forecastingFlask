@@ -113,3 +113,120 @@ pip install flask gunicorn
 ```bash
 python app.py
 ```
+
+##
+
+```markdown
+## Deployment
+
+1. **Allow Port:**
+   ```bash
+   sudo ufw allow 5000
+   ```
+
+2. **Edit WSGI File:**
+   ```bash
+   nano /forecastingFlask/wsgi.py
+   ```
+   Create the WSGI file:
+   ```python
+   # wsgi.py
+   from myproject import app
+
+   if __name__ == "__main__":
+       app.run()
+   ```
+
+3. **Run Gunicorn:**
+   ```bash
+   gunicorn --bind 0.0.0.0:5000 wsgi:app
+   ```
+   Press `CTRL + C` to stop.
+
+4. **Deactivate Virtual Environment:**
+   ```bash
+   deactivate
+   ```
+
+5. **Create Gunicorn Service File:**
+   ```bash
+   sudo nano /etc/systemd/system/forecastingFlask.service
+   ```
+   Add the following content:
+   ```ini
+   [Unit]
+   Description=Gunicorn instance to serve forecastingFlask
+   After=network.target
+
+   [Service]
+   User=azureuser
+   Group=www-data
+   WorkingDirectory=/home/azureuser/forecastingFlask
+   Environment="PATH=/home/azureuser/forecastingFlask/venv/bin"
+   ExecStart=/home/azureuser/forecastingFlask/venv/bin/gunicorn --workers 3 --bind unix:/home/azureuser/forecastingFlask/forecastingFlask.sock -m 007 app:app
+
+   [Install]
+   WantedBy=multi-user.target
+   ```
+
+6. **Manage Gunicorn Service:**
+   ```bash
+   sudo systemctl enable forecastingFlask
+   sudo systemctl start forecastingFlask
+   ```
+   Check the status:
+   ```bash
+   sudo systemctl status forecastingFlask
+   ```
+
+7. **Adjust Gunicorn Socket Permissions:**
+   ```bash
+   sudo chown your_username:www-data /home/your_username/forecastingFlask/forecastingFlask.sock
+   sudo chmod 660 /home/your_username/forecastingFlask/forecastingFlask.sock
+   ```
+
+8. **NGINX Configuration:**
+   ```bash
+   sudo nano /etc/nginx/sites-available/forecastingFlask
+   ```
+   Add the following server block:
+   ```nginx
+   server {
+       listen 80;
+       server_name example.com www.example.com;  # Replace with your actual domain
+
+       location / {
+           include proxy_params;
+           proxy_pass http://unix:/home/azureuser/forecastingFlask/forecastingFlask.sock;
+       }
+
+       location /static {
+           alias /home/azureuser/forecastingFlask/static;
+       }
+
+       location /uploads {
+           alias /home/azureuser/forecastingFlask/uploads;
+       }
+
+       error_page 500 502 503 504 /500.html;
+       client_max_body_size 10M;
+   }
+   ```
+
+9. **Test NGINX Configuration:**
+   ```bash
+   sudo nginx -t
+   ```
+   If there are no errors, restart Nginx:
+   ```bash
+   sudo systemctl restart nginx
+   ```
+
+10. **Adjust Directory Permissions:**
+    ```bash
+    sudo chmod +x /home
+    sudo chmod +x /home/azureuser
+    sudo chmod +x /home/azureuser/forecastingFlask
+    ```
+```
+
