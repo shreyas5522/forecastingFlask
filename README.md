@@ -61,7 +61,7 @@ FLUSH PRIVILEGES;
 3. Create the users table:
 
     ```sql
-    CREATE TABLE IF NOT EXISTS users (
+    CREATE TABLE IF NOT EXISTS user (
         id INT AUTO_INCREMENT PRIMARY KEY,
         username VARCHAR(20) UNIQUE NOT NULL,
         password VARCHAR(60) NOT NULL
