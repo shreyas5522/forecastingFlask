@@ -121,111 +121,94 @@ Ctrl + C after this because it only for teting whether all lib installed or not
 1. **Allow Port:**
    ```bash
    sudo ufw allow 5000
-   ```
+   sudo ufw allow 80
 
-2. **Edit WSGI File: In the Project Folder**
+   ```
+2. **Create Gunicorn Service File:**
    ```bash
-   sudo nano /home/azureuser/forecastingFlask/wsgi.py
-   ```
-   Create the WSGI file:
-   ```python
-   # wsgi.py
-from forecastingFlask import app
-
-if __name__ == "__main__":
-    app.run()
-   ```
-
-1. **Run Gunicorn:**
-   ```bash
-   gunicorn --bind 0.0.0.0:5000 wsgi:app
-   ```
-   Press `CTRL + C` to stop.
-
-2. **Deactivate Virtual Environment:**
-   ```bash
-   deactivate
-   ```
-
-3. **Create Gunicorn Service File:**
-   ```bash
-   sudo nano /etc/systemd/system/forecastingFlask.service
+   sudo nano /etc/systemd/system/gunicorn.service
    ```
    Add the following content:
    ```ini
-   [Unit]
-   Description=Gunicorn instance to serve forecastingFlask
-   After=network.target
+    [Unit]
+    Description=Gunicorn instance to serve forecastingFlask
+    After=network.target
 
-   [Service]
-   User=azureuser
-   Group=www-data
-   WorkingDirectory=/home/azureuser/forecastingFlask
-   Environment="PATH=/home/azureuser/forecastingFlask/venv/bin"
-   ExecStart=/home/azureuser/forecastingFlask/venv/bin/gunicorn --workers 3 --bind unix:/home/azureuser/forecastingFlask/forecastingFlask.sock -m 007 app:app
+    [Service]
+    User=azureuser
+    Group=azureuser
+    WorkingDirectory=/home/azureuser/forecastingFlask
+    ExecStart=/home/azureuser/forecastingFlask/venv/bin/gunicorn -w 4 -b 127.0.0.1:5000 app:app
 
-   [Install]
-   WantedBy=multi-user.target
+    [Install]
+    WantedBy=multi-user.target
+
    ```
-
-4. **Manage Gunicorn Service:**
+3. **Manage Gunicorn Service:**
    ```bash
-   sudo systemctl enable forecastingFlask
-   sudo systemctl start forecastingFlask
+    sudo systemctl start gunicorn
+    sudo systemctl enable gunicorn
    ```
    Check the status:
    ```bash
    sudo systemctl status forecastingFlask
    ```
 
-5. **Adjust Gunicorn Socket Permissions:**
+4. **Adjust Gunicorn Socket Permissions:**
    ```bash
    sudo chown your_username:www-data /home/your_username/forecastingFlask/forecastingFlask.sock
    sudo chmod 660 /home/your_username/forecastingFlask/forecastingFlask.sock
    ```
 
-6. **NGINX Configuration:**
+5. **NGINX Configuration:**
    ```bash
    sudo nano /etc/nginx/sites-available/forecastingFlask
    ```
    Add the following server block:
    ```nginx
    server {
-       listen 80;
-       server_name example.com www.example.com;  # Replace with your actual domain
+        listen 80;
+        server_name webforecast.tech www.webforecast.tech;  # Replace with your actual domain
 
-       location / {
-           include proxy_params;
-           proxy_pass http://unix:/home/azureuser/forecastingFlask/forecastingFlask.sock;
-       }
+        location / {
+            proxy_pass http://127.0.0.1:5000;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
 
-       location /static {
-           alias /home/azureuser/forecastingFlask/static;
-       }
+        location /static {
+            alias /home/azureuser/forecastingFlask/static;
+        }
 
-       location /uploads {
-           alias /home/azureuser/forecastingFlask/uploads;
-       }
+        location /media {
+            alias /path/to/forecastingFlask/media;
+        }
 
-       error_page 500 502 503 504 /500.html;
-       client_max_body_size 10M;
-   }
+        location /uploads {
+            alias /home/azureuser/forecastingFlask/uploads;
+        }
+
+        error_page 500 502 503 504 /500.html;
+                    location = /50x.html {
+            root /usr/share/nginx/html;
+        }
+    }
    ```
 
-7. **Test NGINX Configuration:**
+6. **Create a symbolic link to enable the Nginx server block:**
    ```bash
-   sudo nginx -t
+   sudo ln -s /etc/nginx/sites-available/forecastingFlask /etc/nginx/sites-enabled
    ```
    If there are no errors, restart Nginx:
    ```bash
-   sudo systemctl restart nginx
+    sudo nginx -t
+    sudo systemctl restart nginx
    ```
 
-8.  **Adjust Directory Permissions:**
+7.  **Adjust Directory Permissions:**
     ```bash
     sudo chmod +x /home
     sudo chmod +x /home/azureuser
     sudo chmod +x /home/azureuser/forecastingFlask
     ```
-```
-
