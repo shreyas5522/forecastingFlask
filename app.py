@@ -7,7 +7,7 @@ from flask_login import LoginManager, UserMixin, login_user, logout_user, login_
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'generated-secret-key'  # Change this to a random secret key
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:%rxUXm*4H3p~80z@localhost/login'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://phpmyadmin:admin%40123@localhost/login'
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
@@ -64,6 +64,7 @@ def home():
         # User is not logged in, redirect to login page
         flash('Please log in to access the home page.', 'info')
         return redirect(url_for('login'))
+        
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -105,4 +106,4 @@ def about():
     return render_template('about.html')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')

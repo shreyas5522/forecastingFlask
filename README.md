@@ -21,14 +21,14 @@ cd forecastingFlask
 ### 1. Installation of Required Packages
 
 ```bash
-sudo apt-get install -y python-is-python3
-sudo apt-get install -y python3-pip
-sudo apt-get install -y pkg-config libmysqlclient-dev
-sudo apt-get install -y python3-mysqldb
-sudo apt install -y mysql-server
-sudo apt-get install -y python3-venv
-sudo apt install -y python3-dev nginx
-sudo apt install -y gunicorn
+sudo apt-get install python-is-python3
+sudo apt-get install python3-pip
+sudo apt-get install pkg-config libmysqlclient-dev
+sudo apt-get install python3-mysqldb
+sudo apt install mysql-server
+sudo apt-get install python3-venv
+sudo apt install python3-dev nginx
+sudo apt install gunicorn
 ```
 ### 2. Setup of MySQL
 
@@ -113,42 +113,41 @@ pip install flask gunicorn
 ```bash
 python app.py
 ```
+Ctrl + C after this because it only for teting whether all lib installed or not
 
-##
 
-```markdown
-## Deployment
+## **Deployment**
 
 1. **Allow Port:**
    ```bash
    sudo ufw allow 5000
    ```
 
-2. **Edit WSGI File:**
+2. **Edit WSGI File: In the Project Folder**
    ```bash
-   nano /forecastingFlask/wsgi.py
+   sudo nano /home/azureuser/forecastingFlask/wsgi.py
    ```
    Create the WSGI file:
    ```python
    # wsgi.py
-   from myproject import app
+from forecastingFlask import app
 
-   if __name__ == "__main__":
-       app.run()
+if __name__ == "__main__":
+    app.run()
    ```
 
-3. **Run Gunicorn:**
+1. **Run Gunicorn:**
    ```bash
    gunicorn --bind 0.0.0.0:5000 wsgi:app
    ```
    Press `CTRL + C` to stop.
 
-4. **Deactivate Virtual Environment:**
+2. **Deactivate Virtual Environment:**
    ```bash
    deactivate
    ```
 
-5. **Create Gunicorn Service File:**
+3. **Create Gunicorn Service File:**
    ```bash
    sudo nano /etc/systemd/system/forecastingFlask.service
    ```
@@ -169,7 +168,7 @@ python app.py
    WantedBy=multi-user.target
    ```
 
-6. **Manage Gunicorn Service:**
+4. **Manage Gunicorn Service:**
    ```bash
    sudo systemctl enable forecastingFlask
    sudo systemctl start forecastingFlask
@@ -179,13 +178,13 @@ python app.py
    sudo systemctl status forecastingFlask
    ```
 
-7. **Adjust Gunicorn Socket Permissions:**
+5. **Adjust Gunicorn Socket Permissions:**
    ```bash
    sudo chown your_username:www-data /home/your_username/forecastingFlask/forecastingFlask.sock
    sudo chmod 660 /home/your_username/forecastingFlask/forecastingFlask.sock
    ```
 
-8. **NGINX Configuration:**
+6. **NGINX Configuration:**
    ```bash
    sudo nano /etc/nginx/sites-available/forecastingFlask
    ```
@@ -213,7 +212,7 @@ python app.py
    }
    ```
 
-9. **Test NGINX Configuration:**
+7. **Test NGINX Configuration:**
    ```bash
    sudo nginx -t
    ```
@@ -222,7 +221,7 @@ python app.py
    sudo systemctl restart nginx
    ```
 
-10. **Adjust Directory Permissions:**
+8.  **Adjust Directory Permissions:**
     ```bash
     sudo chmod +x /home
     sudo chmod +x /home/azureuser
