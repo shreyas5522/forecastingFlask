@@ -21,14 +21,14 @@ cd forecastingFlask
 ### 1. Installation of Required Packages
 
 ```bash
-sudo apt-get install python-is-python3
-sudo apt-get install python3-pip
-sudo apt-get install pkg-config libmysqlclient-dev
+sudo apt-get install -y python-is-python3
+sudo apt-get install -y python3-pip
+sudo apt-get install -y pkg-config libmysqlclient-dev
 sudo apt-get install -y python3-mysqldb
-sudo apt install mysql-server
-sudo apt-get install python3-venv
-sudo apt install python3-dev nginx -y
-sudo apt install gunicorn
+sudo apt install -y mysql-server
+sudo apt-get install -y python3-venv
+sudo apt install -y python3-dev nginx
+sudo apt install -y gunicorn
 ```
 ### 2. Setup of MySQL
 
