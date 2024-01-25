@@ -151,13 +151,7 @@ Ctrl + C after this because it only for teting whether all lib installed or not
    ```
    Check the status:
    ```bash
-   sudo systemctl status forecastingFlask
-   ```
-
-4. **Adjust Gunicorn Socket Permissions:**
-   ```bash
-   sudo chown your_username:www-data /home/your_username/forecastingFlask/forecastingFlask.sock
-   sudo chmod 660 /home/your_username/forecastingFlask/forecastingFlask.sock
+   sudo systemctl status gunicorn
    ```
 
 5. **NGINX Configuration:**
