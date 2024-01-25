@@ -7,7 +7,7 @@ from flask_login import LoginManager, UserMixin, login_user, logout_user, login_
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'generated-secret-key'  # Change this to a random secret key
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://phpmyadmin:admin%40123@localhost/login'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:%rxUXm*4H3p~80z@localhost/login'
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
