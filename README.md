@@ -206,3 +206,7 @@ Ctrl + C after this because it only for teting whether all lib installed or not
     sudo chmod +x /home/azureuser
     sudo chmod +x /home/azureuser/forecastingFlask
     ```
+
+## Cloudflare Setting
+Proxied DNS & 
+Flexible SSL

@@ -86,13 +86,18 @@ def login():
 def signup():
     form = SignupForm()
     if form.validate_on_submit():
-        user = User(username=form.username.data, password=form.password.data)
-        db.session.add(user)
-        db.session.commit()
-        flash('Account created successfully. You can now log in!', 'success')
-        return redirect(url_for('login'))
+        # Check if the username is already taken
+        existing_user = User.query.filter_by(username=form.username.data).first()
+        if existing_user:
+            flash('Username is already taken. Please choose a different one.', 'username-taken')
+        else:
+            # If the username is unique, create a new user
+            user = User(username=form.username.data, password=form.password.data)
+            db.session.add(user)
+            db.session.commit()
+            flash('Account created successfully. You can now log in!', 'success')
+            return redirect(url_for('login'))
     return render_template('signup.html', form=form)
-
 @app.route('/logout', methods=['POST'])
 @login_required
 def logout():

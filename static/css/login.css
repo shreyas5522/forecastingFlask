@@ -11,61 +11,50 @@ body {
   align-items: center;
   height: 100vh;
 }
-/* .login-container {
-  display: block;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-} */
 
-
-form {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-h2 {
+h2.form-title {
   text-align: center;
   color: #333;
 }
 
-ul {
-  list-style: none;
-  padding: 0;
+.signup-container,
+.login-container {
+  text-align: center;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  max-width: 600px;
 }
 
-li {
-  color: #ff0000; /* Adjust the color as per your design */
-}
-
-label {
-  display: block;
-  margin: 10px 0;
-  color: #555;
-}
-
-input {
+.signup-form input[type="text"],
+.login-form input[type="text"],
+.signup-form input[type="password"],
+.login-form input[type="password"] {
   width: 100%;
-  padding: 8px;
-  margin-bottom: 10px;
+  padding: 15px;
+  margin: 10px 0;
   box-sizing: border-box;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 5px;
 }
 
-button {
+.signup-form button,
+.login-form button {
   width: 100%;
-  padding: 10px;
+  padding: 15px;
   background-color: #007bff;
   color: #fff;
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-button:hover {
+.signup-form button:hover,
+.login-form button:hover {
   background-color: #0056b3;
 }
 
@@ -73,4 +62,63 @@ p {
   text-align: center;
   margin-top: 15px;
   color: #555;
+}
+
+.link {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.link a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.link a:hover {
+  text-decoration: underline;
+}
+\.login-form .username-taken {
+  border: 2px solid #ff0000;  /* Red border for the flash message */
+}
+
+/* Add this to your existing CSS */
+.login-form .username-taken {
+  border: 2px solid #ff5a5f;  /* A darker shade of red for the flash message border */
+  transition: border-color 0.3s ease;  /* Smooth transition for better visual experience */
+}
+
+.flash-messages {
+  padding: 10px;
+  margin-bottom: 15px;
+  background-color: #f8d7da; /* Light red background color */
+  color: #721c24; /* Dark red text color */
+  border: 1px solid #f5c6cb; /* Slightly darker red border color */
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for better visual experience */
+}
+
+.flash-message {
+  margin: 0;
+}
+
+/* Adjust the color of the flash message on hover for better interactivity */
+.flash-messages:hover {
+  background-color: #f1b0b7; /* Slightly lighter red background color on hover */
+  color: #721c24; /* Dark red text color on hover */
+}
+/* Add this to your existing CSS */
+/* Add this to your existing CSS */
+.form-btn {
+  width: 100%;
+  padding: 15px;
+  background-color: #007bff; /* Blue color for the button */
+  color: #fff; /* White text color */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Smooth transition for better visual experience */
+}
+
+.form-btn:hover {
+  background-color: #0056b3; /* Darker blue color on hover */
 }

@@ -2,40 +2,44 @@
 {% block title %}SignUp - App{% endblock %}
 
 {% block body %}
+    {% block stylesheets %}
+        <!-- Additional stylesheets for the home page -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+
+    {% endblock %}
 
 
-{% block stylesheets %}
-    <!-- Additional stylesheets for the home page -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
-
-{% endblock %}
-
-
-<body>
-    <h2>Sign Up</h2>
-    <div class="login-container">
-
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    <ul>
-        {% for message in messages %}
-        <li>{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    {% endwith %}
-    <form method="post" action="">
-        {{ form.hidden_tag() }}
-        <label for="username">Username:</label>
-        {{ form.username() }}
-        <label for="password">Password:</label>
-        {{ form.password() }}
-        <label for="confirm_password">Confirm Password:</label>
-        {{ form.confirm_password() }}
-        {{ form.submit() }}
-    </form>
-    <p>Already have an account? <a href="{{ url_for('login') }}">Log in here</a>.</p>
-    </div>
-</body>
+    <body>
+        <h2 class="form-title">Sign Up</h2>
+        <div class="signup-container">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for message in messages %}
+                            <p class="flash-message">{{ message }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+            
+            <form class="signup-form" method="post" action="">
+                {{ form.hidden_tag() }}
+                <label for="username">Username:</label>
+                {% if 'Username is already taken.' in get_flashed_messages(with_categories=true) %}
+                    {{ form.username(class="username-taken") }}
+                {% else %}
+                    {{ form.username() }}
+                {% endif %}
+                <label for="password">Password:</label>
+                {{ form.password() }}
+                <label for="confirm_password">Confirm Password:</label>
+                {{ form.confirm_password() }}
+                <!-- In login.html and signup.html -->
+                {{ form.submit(class="form-btn") }}
+            </form>
+            
+            <p>Already have an account? <a href="{{ url_for('login') }}">Log in here</a>.</p>
+        </div>
+    </body>
 {% endblock %}

@@ -2,38 +2,37 @@
 {% block title %}Login - App{% endblock %}
 
 {% block body %}
+    {% block stylesheets %}
+        <!-- Additional stylesheets for the home page -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
 
+    {% endblock %}
 
-{% block stylesheets %}
-    <!-- Additional stylesheets for the home page -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
-
-{% endblock %}
-
-
-<body>
-    <h2>Login</h2>
+    <body>
+    <h2 class="form-title">Login</h2>
     <div class="login-container">
-
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    <ul style="display:block;">
-        {% for message in messages %}
-        <li>{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    {% endwith %}
-    <form style="display:block;" method="post" action="">
-        {{ form.hidden_tag() }}
-        <label for="username">Username:</label>
-        {{ form.username() }}
-        <label for="password">Password:</label>
-        {{ form.password() }}
-        {{ form.submit() }}
-    </form>
-    <p>Don't have an account? <a href="{{ url_for('signup') }}">Sign up here</a>.</p>
-</div>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for message in messages %}
+                        <p class="flash-message">{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        
+        <form class="login-form" method="post" action="">
+            {{ form.hidden_tag() }}
+            <label for="username">Username:</label>
+            {{ form.username() }}
+            <label for="password">Password:</label>
+            {{ form.password() }}
+            <!-- In login.html and signup.html -->
+            {{ form.submit(class="form-btn") }}
+        </form>
+        
+        <p>Don't have an account? <a href="{{ url_for('signup') }}">Sign up here</a>.</p>
+    </div>
 </body>
 {% endblock %}
