@@ -25,12 +25,37 @@
   {% block stylesheets %}
 
   {% endblock %}
-
 </head>
-<header>
-  <h1 >WebForecast</h1>
 
+<header>
+  <div class="navbar">
+    <div class="brand">
+      <span class="brand-text">WebForecast</span>
+    </div>
+    <div class="navbar-links" id="navbar-links">
+      <a href="{{ url_for('home') }}">Home</a>
+      <a href="{{ url_for('about') }}">About</a>
+      <a href="{{ url_for('login') }}">Login</a>
+      <a href="{{ url_for('login') }}">Register</a>
+
+    </div>
+    <div class="navbar-toggle" onclick="toggleNavbar()">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </div>
+  </div>
+  
 </header>
+
+<script>
+  function toggleNavbar() {
+  const navbarLinks = document.getElementById('navbar-links');
+  navbarLinks.classList.toggle('show');
+}
+</script>
+<!-- Your website content goes here -->
+
 {% block body %}
 {% endblock %}
 
