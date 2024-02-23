@@ -1,54 +1,15 @@
-# app.py
 from flask import Flask, render_template, request, redirect, url_for, flash
-from flask_sqlalchemy import SQLAlchemy
-from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, validators
-from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
+from forms import LoginForm, SignupForm
+from models import db, User
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 
+# Initializing Flask app
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'generated-secret-key'  # Change this to a random secret key
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:%rxUXm*4H3p~80z@localhost/login'
-db = SQLAlchemy(app)
+db.init_app(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
-
-# Create User model
-class User(db.Model, UserMixin):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(20), unique=True, nullable=False)
-    password = db.Column(db.String(60), nullable=False)
-
-    def set_password(self, password):
-        self.password = generate_password_hash(password)
-
-    def check_password(self, password):
-        return check_password_hash(self.password, password)
-
-    def is_authenticated(self):
-        return True
-
-    def is_active(self):
-        return True
-
-    def is_anonymous(self):
-        return False
-
-    def get_id(self):
-        return str(self.id)
-
-# Create a form for login
-class LoginForm(FlaskForm):
-    username = StringField('Username', validators=[validators.DataRequired()])
-    password = PasswordField('Password', validators=[validators.DataRequired()])
-    remember = BooleanField('Remember Me')
-    submit = SubmitField('Login')
-
-# Create a form for signup
-class SignupForm(FlaskForm):
-    username = StringField('Username', validators=[validators.DataRequired(), validators.Length(min=4, max=20)])
-    password = PasswordField('Password', validators=[validators.DataRequired(), validators.Length(min=6)])
-    confirm_password = PasswordField('Confirm Password', validators=[validators.DataRequired(), validators.EqualTo('password')])
-    submit = SubmitField('Sign Up')
 
 @login_manager.user_loader
 def load_user(user_id):
